@@ -1,12 +1,6 @@
 <?php
 class NewsController extends BaseController
 {
-    public $menu = array(
-        "1" => "Lập trình PHP",
-        "2" => "Đồ Họa",
-        "3" => "Phân tích thiết kế hệ thống",
-        "4" => "Làm chủ CMS",
-    );
 
     public $data = array(
         array(
@@ -31,19 +25,13 @@ class NewsController extends BaseController
 
     public function index()
     {
-        $this->viewData['menu'] = $this->menu;
         $this->viewData['data'] = $this->data;
-        $this->viewData['title'] = 'Demo Controller- View - With Laravel Framework';
 
         return View::make('news.index', $this->viewData);
     }
 
     public function detail($id)
     {
-        $this->viewData['title'] = 'Demo Controller- View - With Laravel Framework';
-
-        $this->viewData['menu'] = $this->menu;
-
         $this->viewData['data'] = $this->data[$id];
 
         return View::make('news.detail', $this->viewData);

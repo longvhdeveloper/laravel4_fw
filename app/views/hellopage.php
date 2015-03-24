@@ -1,1 +1,1 @@
-<h1>Hello Page Call</h1>
+<h1>Hello Page Call . Page : <?php echo $page; ?></h1>
