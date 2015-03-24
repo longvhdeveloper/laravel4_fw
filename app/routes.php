@@ -29,3 +29,9 @@ View::share('demo', 'Content demo');
 View::composer(array('user.show', 'user.index'), 'DemoComposer');
 
 Route::get('admin/news', "controllers\admin\NewsController@index");
+
+Route::get('news', 'NewsController@index');
+
+Route::get('news/detail/{id}', 'NewsController@detail')->where(
+    array('id' => '[0-9]+')
+);
