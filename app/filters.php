@@ -22,6 +22,14 @@ App::after(function($request, $response)
 	//
 });
 
+Route::filter('number', 'NumberFilter');
+
+Route::filter('even', function(){
+	if (Input::get('num') % 2 != 0) {
+		return 'Error not even';
+	}
+});
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Filters

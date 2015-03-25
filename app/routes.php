@@ -35,3 +35,25 @@ Route::get('news', 'NewsController@index');
 Route::get('news/detail/{id}', 'NewsController@detail')->where(
     array('id' => '[0-9]+')
 );
+
+Route::get('filter/test', function(){
+    $str = '<form action="'.URL::to('filter/test_submit').'" method="post">';
+    $str .= '<input type="text" name="num" size="15" /><br/>';
+    $str .= '<input type="submit" name="fsubmit" value="Submit" />';
+    $str .= "</form>";
+
+    return $str;
+});
+
+################################
+// Before -> Router -> After(not return)
+################################
+// Route::post('filter/test_submit', array('before' => 'number:'.Input::get('num').'|even', function(){
+//     return 'It is OK';
+// }));
+
+Route::post('filter/test_submit', array('before' => 'number:'.Input::get('num').'|even', function(){
+    return 'It is OK';
+}));
+
+Route::when('admin/*', 'checkAdmin');
