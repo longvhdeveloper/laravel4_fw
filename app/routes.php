@@ -36,6 +36,51 @@ Route::get('news/detail/{id}', 'NewsController@detail')->where(
     array('id' => '[0-9]+')
 );
 
+$action = function($page = '', $id = ''){
+    return 'Route/vd1 active . Page : ' . $page . ' - Id : '. $id;
+};
+
+Route::get('route/vd1/{page}/{id?}',$action)->where(array(
+    'page' => '[a-zA-Z\-]+',
+    'id' => '[0-9]+'
+));
+
+Route::get('route/vd2/{page}', function($page){
+    return View::make('hellopage')->with('page', $page);
+});
+
+Route::get('qhonline/test', array('as' => 'qhotest', function(){
+    return 'Qho test page';
+}));
+
+Route::get('route/user', array(
+    'as' => 'route_user',
+    'uses' => 'UsersController@index'
+));
+
+Route::group(array('before' => 'checklogin'), function(){
+    Route::get('qhonline/vd123', function(){
+        return 'qhonline testing';
+    });
+});
+
+
+Route::group(array('prefix' => 'qhonline'), function(){
+    Route::get('user', function(){
+        return 'qhonline testing user';
+    });
+
+    Route::get('news', function(){
+        return 'qhonline testing news';
+    });
+});
+
+Route::group(array('domain' => 'jackie.todo.vn'), function(){
+    Route::get('my/profile', function(){
+        return 'my profile jackie';
+    });
+});
+
 Route::get('filter/test', function(){
     $str = '<form action="'.URL::to('filter/test_submit').'" method="post">';
     $str .= '<input type="text" name="num" size="15" /><br/>';
@@ -57,3 +102,19 @@ Route::post('filter/test_submit', array('before' => 'number:'.Input::get('num').
 }));
 
 Route::when('admin/*', 'checkAdmin');
+
+View::share('title', 'Demo Controller- View - With Laravel Framework');
+
+View::composer(array('news.index', 'news.detail'), function($view){
+    $menu = array(
+        "1" => "Lập trình PHP",
+        "2" => "Đồ Họa",
+        "3" => "Phân tích thiết kế hệ thống",
+        "4" => "Làm chủ CMS",
+    );
+    $view->with('menu', $menu);
+});
+
+###################################################################
+
+
