@@ -116,5 +116,26 @@ View::composer(array('news.index', 'news.detail'), function($view){
 });
 
 ###################################################################
+Route::get('layout', 'LayoutController@index');
+
+Route::get('url/full', function(){
+    return URL::full();
+});
+
+Route::get('url/asset', function(){
+   return URL::asset('public/style/main.css', true);
+});
+
+Route::get('url/to', function(){
+    return URL::to('admin/user', array('edit', 'jackie'), true);
+});
+
+Route::get('url/route', function(){
+    return URL::route('route_user', array('11'));
+});
+
+Route::get('url/action', function(){
+    return URL::action('LayoutController@index');
+});
 
 
