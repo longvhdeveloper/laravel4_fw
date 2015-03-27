@@ -53,7 +53,7 @@ Route::get('qhonline/test', array('as' => 'qhotest', function(){
     return 'Qho test page';
 }));
 
-Route::get('route/user', array(
+Route::get('route/user/{id}', array(
     'as' => 'route_user',
     'uses' => 'UsersController@index'
 ));
@@ -136,6 +136,12 @@ Route::get('url/route', function(){
 
 Route::get('url/action', function(){
     return URL::action('LayoutController@index');
+});
+
+include('macros.php');
+
+Route::get('form/create', function(){
+    return View::make('form_view');
 });
 
 
