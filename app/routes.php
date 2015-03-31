@@ -327,3 +327,14 @@ Route::post('upload/do_upload', function(){
 			))->withErrors($validator);
 	}
 });
+
+Route::get('cookie/create', function(){
+    $cookie = Cookie::make('name', 'jackie', 30);
+
+    return Response::make('created cookie')->withCookie($cookie);
+});
+
+Route::get('cookie/show', function(){
+    $name = Cookie::get('name');
+    return 'Hello , ' . $name;
+});

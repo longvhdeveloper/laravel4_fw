@@ -1,0 +1,7 @@
+Cookie in laravel
+
+Cookie::make('name', 'value', time);
+
+Cookie::get('name');
+
+Cookie::forever('name', 'value');
