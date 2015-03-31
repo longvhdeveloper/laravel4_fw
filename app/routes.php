@@ -144,4 +144,132 @@ Route::get('form/create', function(){
     return View::make('form_view');
 });
 
+Route::get('validate/form', function(){
+    return View::make('formvalid');
+});
 
+Route::post('validate/process', function(){
+    $data = Input::all();
+
+    $rules = array(
+        'username' => 'required|min:3|qhonline:8',
+        'password' => 'required|confirmed',
+        'email' => 'email'
+    );
+
+    $messages = array(
+        'username.required' => 'Vui long nhap username',
+        'password.required' => 'Vui long nhap mat khau',
+        'qhonline' => 'Gia tri nhap vao khong dung',
+    );
+
+    $valid = Validator::make($data, $rules, $messages);
+
+    if ($valid->passes()) {
+        return 'It is OK';
+    } else {
+        return Redirect::to('validate/form')->withErrors($valid);
+    }
+});
+
+//Validator::extend('qhonline', function($field, $value, $params){
+//    if ($value == 'qhonline') {
+//        return true;
+//    } else {
+//        return false;
+//    }
+//});
+
+Validator::extend('qhonline', 'QhonlineValidate@qhonline');
+
+Route::get('res/test', function(){
+    //return Redirect::to('res/test2');
+    return Redirect::route('res.test2', array('999'));
+});
+
+Route::get('res/test2/{id}',array('as' => 'res.test2', function($id){
+    return 'Hello Laravel Framework . Id : ' . $id;
+}));
+
+Route::get('res/test3', function(){
+    $array = array(
+        'username' => 'jackie',
+        'password' => '12345',
+        'level' => 2
+    );
+    return Response::json($array);
+});
+
+Route::get('res/test4', function(){
+    return Response::download('url');
+});
+
+Route::get('res/test5', function(){
+    $res = Response::make('<?xml version="1.0"?><root><data>Hello Laravel Framework</data></root>', '200');
+    $res->headers->set('content-type', 'text/xml');
+    return $res;
+});
+
+Route::get('input/form', function(){
+    return View::make('form_input');
+});
+
+Route::post('input/process', function(){
+    $data = Input::except('user', 'pass');
+
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+});
+
+Route::get('input/test', function(){
+    //Input::flash();
+    return Redirect::to('input/test2')->withInput(Input::only('user'));
+});
+
+Route::get('input/test2', function(){
+    $data = Input::old();
+
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+
+    return "Hello Laravel Input";
+});
+
+Route::get('upload/form', function(){
+    return View::make('form_upload');
+});
+
+Route::post('upload/process', function(){
+    $data = Input::all();
+//    echo '<pre>';
+//    print_r($data);
+//    echo '</pre>';
+//
+//    echo 'Size : ' .$data->getSize() . '<br/>';
+//    echo 'Size : ' .$data->getRealPath() . '<br/>';
+//    echo 'Size : ' .$data->getClientOriginalName() . '<br/>';
+//    echo 'MimeType : ' .$data->getMimeType() . '<br/>';
+//    echo 'Real path : ' .$data->getRealPath() . '<br/>';
+
+    $rules = array(
+        'img' => 'image|min:10'
+    );
+
+    $valid = Validator::make($data, $rules);
+
+    if ($valid->passes()) {
+        $image = $data['img'];
+        $isUpload = $image->move('uploads/img', $image->getClientOriginalName());
+
+        if ($isUpload) {
+            return Response::json('success', 200);
+        } else {
+            return Response::json('error', 400);
+        }
+    } else {
+        return Redirect::to('upload/form')->withErrors($valid);
+    }
+
+});
