@@ -273,3 +273,57 @@ Route::post('upload/process', function(){
     }
 
 });
+
+Route::get('upload/multi', function(){
+	return View::make('upload_multi');
+});
+
+Route::any('upload/proccess_multi', array('as' => 'upload.multi',function(){
+
+	if (Input::old('number') != '') {
+		$number = Input::old('number');
+	} else {
+		$number = Input::get('number');
+	}
+
+	return View::make('process_multi', array(
+		'number' => $number
+	));
+}));
+
+Route::post('upload/do_upload', function(){
+	$data = Input::all();
+
+	$rules = array();
+
+    $images = array();
+
+	for ($i =0; $i < $data['number']; $i++) {
+		$rules['fimage' . $i] = 'image|min:10|mimes:jpeg,jpg,png';
+        $images[] = $data['fimage' . $i];
+	}
+
+	$validator = Validator::make($data, $rules);
+
+	if ($validator->passes()) {
+		$result = array();
+		foreach ($images as $key => $image) {
+
+            $isUpload = $image->move('uploads/img', $image->getClientOriginalName());
+
+            if ($isUpload) {
+                $result[] = 'success';
+            } else {
+                $result[] = 'failed';
+            }
+
+            unset($image);
+        }
+
+		return Response::json($result, 200);
+	} else {
+		return Redirect::to('upload/proccess_multi')->withInput(array(
+			'number' => $data['number']
+			))->withErrors($validator);
+	}
+});
