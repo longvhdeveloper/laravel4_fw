@@ -338,3 +338,7 @@ Route::get('cookie/show', function(){
     $name = Cookie::get('name');
     return 'Hello , ' . $name;
 });
+
+Route::get('library/sample01', function(){
+    return View::make('library01');
+});

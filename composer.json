@@ -16,7 +16,8 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php",
 			"app/filters",
-            "app/validation"
+            "app/validation",
+            "app/library/qhonline"
 		]
 	},
 	"scripts": {
