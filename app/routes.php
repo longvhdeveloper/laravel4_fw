@@ -342,3 +342,51 @@ Route::get('cookie/show', function(){
 Route::get('library/sample01', function(){
     return View::make('library01');
 });
+
+Route::get('schema/create', function(){
+    Schema::create('users', function($table){
+        $table->increments('id');
+        $table->string('username', 60);
+        $table->string('password', 66);
+        $table->integer('level')->default(1);
+        $table->timestamps();
+    });
+
+    return 'Done';
+});
+
+Route::get('schema/rename', function(){
+    Schema::rename('users', 'user');
+
+    return 'Done';
+});
+
+Route::get('schema/change', function(){
+    Schema::table('user', function($table){
+        $table->string('email', 255)->after('password');
+    });
+
+    return 'Done';
+});
+
+Route::get('schema/column', function(){
+    Schema::table('user', function($table){
+        $table->renameColumn('email', 'mail');
+    });
+
+    return 'Done';
+});
+
+Route::get('schema/dropcolumn',function(){
+    Schema::table('user', function($table){
+        $table->dropColumn('mail');
+    });
+
+    return 'Done';
+});
+
+Route::get('schema/droptable', function(){
+    Schema::drop('user');
+
+    return 'Done';
+});
