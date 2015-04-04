@@ -390,3 +390,50 @@ Route::get('schema/droptable', function(){
 
     return 'Done';
 });
+
+Route::get('query/create', function(){
+    DB::insert('insert into users(username, password, level) values(?,?,?)', array(
+        'John',
+        '5432108',
+        '1'
+    ));
+
+    return 'Done';
+});
+
+Route::get('query/show', function(){
+    $users = DB::select('select * from users where level = ?', array('1'));
+    echo '<pre>';
+    print_r($users);
+    echo '</pre>';
+});
+
+Route::get('query/update', function(){
+    DB::update('update users set username=? where id=?', array(
+        'Peter123',
+        '4'
+    ));
+
+    return 'Done';
+});
+
+Route::get('query/delete', function(){
+    DB::delete('delete from users where id = ?', array(4));
+
+    return 'Done';
+});
+
+Route::get('query2/all', function(){
+    //$table = DB::table('users')->get(array('id, username'));
+    //$table = DB::table('users')->select('id', 'username')->where('id', '>' , '1')->get();
+//    $table = DB::table('users')->select('id', 'username')->where(function($where){
+//        $where->where('id', '>', '2');
+//        $where->where('level', '2');
+//    })->get();
+
+    $table = DB::table('users')->orderby('id', 'DESC')->skip(0)->take(5)->get();
+
+    echo '<pre>';
+    print_r($table);
+    echo '</pre>';
+});
