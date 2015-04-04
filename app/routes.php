@@ -437,3 +437,5 @@ Route::get('query2/all', function(){
     print_r($table);
     echo '</pre>';
 });
+
+
