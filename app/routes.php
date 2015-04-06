@@ -438,4 +438,64 @@ Route::get('query2/all', function(){
     echo '</pre>';
 });
 
+Route::get('orm/vd1', function(){
+    $users = User::where('level', '2')->get()->toArray();
+    echo '<pre>';
+    print_r($users);
+    echo '</pre>';
+});
+
+Route::get('eloquent/vd1', function(){
+	$posts = User::find(1)->posts()->where('id', '<', 3)->get();
+	foreach ($posts as $post) {
+		echo $post->title . '<br/>';
+	}
+});
+
+Route::get('eloquent/vd2', function(){
+    $data = Post::find(1)->user()->get();
+
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+});
+
+Route::get('eloquent/vd3', function(){
+    $post = new Post();
+
+    $post->title = 'Five posts';
+    $post->body = 'Content five post';
+
+    $user = User::find(2)->posts()->save($post);
+
+    return 'Done';
+});
+
+Route::get('eloquent/vd4', function(){
+    $data = Song::find(1)->albums()->get()->toArray();
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+});
+
+Route::get('eloquent/vd5', function(){
+    $data = Album::find(1)->songs()->get()->toArray();
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+});
+
+Route::get('eloquent/vd6', function(){
+    $song = new Song();
+    $song->name = 'Em cua ngay hom qua';
+    $song->save();
+
+    $album = Album::find(3);
+
+    //$song->albums()->save($album);
+
+    $song->albums()->sync(array(3));
+
+    return 'Done';
+});
 
