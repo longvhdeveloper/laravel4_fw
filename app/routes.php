@@ -499,3 +499,9 @@ Route::get('eloquent/vd6', function(){
     return 'Done';
 });
 
+Route::resource('note', 'NoteController');
+
+Route::resource('note2', 'Note2Controller', array(
+    'only' => array('index', 'show')
+));
+

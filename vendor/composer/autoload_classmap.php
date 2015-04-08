@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddEmailToUsers' => $baseDir . '/app/database/migrations/2015_04_04_083659_add_email_to_users.php',
+    'Album' => $baseDir . '/app/models/Album.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Boris\\Boris' => $vendorDir . '/d11wtq/boris/lib/Boris/Boris.php',
     'Boris\\CLIOptionsHandler' => $vendorDir . '/d11wtq/boris/lib/Boris/CLIOptionsHandler.php',
@@ -33,6 +34,7 @@ return array(
     'CreateAlbumsSongs' => $baseDir . '/app/database/migrations/2015_04_06_141922_create_albums_songs.php',
     'CreatePosts' => $baseDir . '/app/database/migrations/2015_04_06_134909_create_posts.php',
     'CreateSongs' => $baseDir . '/app/database/migrations/2015_04_06_141724_create_songs.php',
+    'CreateTableNote' => $baseDir . '/app/database/migrations/2015_04_08_141659_create_table_note.php',
     'CreateTablePosts' => $baseDir . '/app/database/migrations/2015_04_04_091903_create_table_posts.php',
     'CreateUsers' => $baseDir . '/app/database/migrations/2015_04_04_082650_create_users.php',
     'Crypt_AES' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/AES.php',
@@ -851,6 +853,8 @@ return array(
     'Net_SSH2' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Net/SSH2.php',
     'NewsController' => $baseDir . '/app/controllers/NewsController.php',
     'Normalizer' => $vendorDir . '/patchwork/utf8/class/Normalizer.php',
+    'Note2Controller' => $baseDir . '/app/controllers/Note2Controller.php',
+    'NoteController' => $baseDir . '/app/controllers/NoteController.php',
     'NumberFilter' => $baseDir . '/app/filters/NumberFilter.php',
     'PHPParser_Autoloader' => $vendorDir . '/nikic/php-parser/lib/PHPParser/Autoloader.php',
     'PHPParser_Builder' => $vendorDir . '/nikic/php-parser/lib/PHPParser/Builder.php',
@@ -1315,6 +1319,7 @@ return array(
     'Psr\\Log\\NullLogger' => $vendorDir . '/psr/log/Psr/Log/NullLogger.php',
     'QhonlineValidate' => $baseDir . '/app/validation/QhonlineValidate.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
+    'Song' => $baseDir . '/app/models/Song.php',
     'Stack\\Builder' => $vendorDir . '/stack/builder/src/Stack/Builder.php',
     'Stack\\StackedHttpKernel' => $vendorDir . '/stack/builder/src/Stack/StackedHttpKernel.php',
     'Symfony\\Component\\BrowserKit\\Client' => $vendorDir . '/symfony/browser-kit/Symfony/Component/BrowserKit/Client.php',
