@@ -63,8 +63,9 @@ class NoteController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
-		return "Edit action with $id";
+        $note = Note::find($id);
+        
+		return View::make('note.edit', array('note' => $note));
 	}
 
 
@@ -77,6 +78,13 @@ class NoteController extends \BaseController {
 	public function update($id)
 	{
 		//PUT or PATCH
+        $note = Note::find($id);
+        $note->title = Input::get('title');
+        $note->info = Input::get('info');
+        
+        $note->save();
+        
+        return Redirect::route('note.index');
 	}
 
 
@@ -88,7 +96,10 @@ class NoteController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$note = Note::find($id);
+        $note->delete();
+        
+        return Redirect::route('note.index');
 	}
 
 
