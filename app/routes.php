@@ -505,3 +505,10 @@ Route::resource('note2', 'Note2Controller', array(
     'only' => array('index', 'show')
 ));
 
+Route::get('pagination/test', function(){
+    //$result = DB::table('users')->paginate(3);
+    
+    $result = User::paginate(3);
+    
+    return View::make('pagination', array('result' => $result));
+});
