@@ -5,3 +5,12 @@ Cookie::make('name', 'value', time);
 Cookie::get('name');
 
 Cookie::forever('name', 'value');
+
+==========================================
+
+Auth::check() : kiem tra xem co phien lam viec hay chua
+Auth::attempt($data, $remember = false) : Ho tro chung thuc
+Auth::user() : lay thong tin user
+Auth::logout()
+Auth::login($object)
+Auth:once($data) : Khong tao phien lam viec

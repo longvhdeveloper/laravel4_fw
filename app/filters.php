@@ -51,7 +51,8 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+			Session::flash('error','Please login to visit this page');
+			return Redirect::guest('auth/login');
 		}
 	}
 });
@@ -75,7 +76,8 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	Session::flash('error', 'You are already logged in');
+	if (Auth::check()) return Redirect::to('auth/profile');
 });
 
 /*

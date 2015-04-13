@@ -558,3 +558,43 @@ Route::get('flash/show', function(){
 Route::get('flash/show2', function(){
    echo Session::get('mess');
 });
+
+Route::get('auth/login', array('before' => 'guest',function(){
+    return View::make('login');
+}));
+
+Route::post('auth/dologin', array(function(){
+    $data = array(
+        'username' => Input::get('username'),
+        'password' => Input::get('password'),
+        'level' => 2
+    );
+
+    if (Auth::attempt($data)) {
+        Session::flash('success', 'Login success');
+        return Redirect::to('auth/profile');
+    } else {
+        Session::flash('error', 'Login error');
+        return Redirect::to('auth/login')->withInput();
+    }
+}));
+
+Route::get('auth/password', function(){
+    return Hash::make('123456');
+});
+
+Route::get('auth/profile', array('before' => 'auth', function(){
+    $str = '';
+    if (Session::has('success')) {
+        $str .= '<p>'.Session::get('success').'</p>';
+    }
+    $str .= 'Hello ' . Auth::user()->username;
+    $str .= ' (<a href="'.URL::to('auth/logout').'">Logout</a>)';
+    return $str;
+}));
+
+Route::get('auth/logout', function(){
+    Auth::logout();
+    Session::flash('error', 'Logout success');
+    return Redirect::to('auth/login');
+});
