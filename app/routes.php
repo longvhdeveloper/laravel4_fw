@@ -507,8 +507,54 @@ Route::resource('note2', 'Note2Controller', array(
 
 Route::get('pagination/test', function(){
     //$result = DB::table('users')->paginate(3);
-    
+
     $result = User::paginate(3);
-    
+
     return View::make('pagination', array('result' => $result));
+});
+
+Route::get('session/create', function(){
+    Session::put('user', 'kenny');
+    return 'Created';
+});
+
+Route::get('session/show', function(){
+    if (Session::has('user')) {
+        $name = Session::get('user');
+        echo "Welcome $name";
+    } else {
+        echo 'Go away';
+    }
+});
+
+Route::get('session/destroy', function(){
+    Session::forget('user');
+    Session::flush();
+    return 'Done';
+});
+
+Route::get('session/create_array', function(){
+    Session::push('users.username', 'jackie');
+    return 'Created';
+});
+
+Route::get('session/show_array', function(){
+    $data = Session::get('users');
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+});
+
+Route::get('flash/create', function(){
+    Session::flash('mess', 'created');
+    return 'Created';
+});
+
+Route::get('flash/show', function(){
+    Session::reflash();
+    echo Session::get('mess');
+});
+
+Route::get('flash/show2', function(){
+   echo Session::get('mess');
 });
