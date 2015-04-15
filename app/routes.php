@@ -598,3 +598,55 @@ Route::get('auth/logout', function(){
     Session::flash('error', 'Logout success');
     return Redirect::to('auth/login');
 });
+
+Route::get('ajax/demo', function(){
+    return View::make('ajaxdemo01');
+});
+
+Route::get('ajax/process01', function(){
+    if (Request::ajax()) {
+        $str = "Welcome back, " . Input::get('data');
+        return Response::json(array('data' => $str));
+    } else {
+        Response::make('Wrong request');
+    }
+});
+
+Route::get('ajax/ex1', function(){
+    return View::make('loginajax');
+});
+
+Route::post('ajax/loginajax_process', function(){
+    $result = array();
+    if (Request::ajax()) {
+        $data = array(
+            'username' => Input::get('username'),
+            'password' => Input::get('password')
+        );
+//        $username = Input::get('username');
+//        $password = Input::get('password');
+//        $user = User::where(function($query) use ($username, $password) {
+//            $query->where('username', $username);
+//            //$query->where('password', $password);
+//        })->first();
+
+//        if (Hash::check($password, $user->password)) {
+//            $result['success'] = 1;
+//            $result['message'] = 'Hello ' . $username;
+//        } else {
+//            $result['error'] = 1;
+//            $result['message'] = 'Wrong username or password';
+//        }
+
+        if (Auth::attempt($data)) {
+            $result['success'] = 1;
+            $result['message'] = 'Hello ' . Auth::user()->username;
+        } else {
+            $result['error'] = 1;
+            $result['message'] = 'Wrong username or password';
+        }
+    } else {
+        $result['message'] = 'Request not valid';
+    }
+    return Response::json($result);
+});
