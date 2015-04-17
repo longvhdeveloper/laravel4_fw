@@ -650,3 +650,28 @@ Route::post('ajax/loginajax_process', function(){
     }
     return Response::json($result);
 });
+
+Route::get('ajax/song', function(){
+    return View::make('ajax_song');
+});
+
+Route::post('ajax/getsong', function(){
+    $result = array();
+    if (Request::ajax()) {
+        $type = Input::get('types');
+        if (!empty($type)) {
+            $songs = Songs::whereIn('type', $type)->get();
+
+            foreach ($songs as $song) {
+                $result[] = array(
+                    'id' => $song->id,
+                    'name' => $song->title,
+                    'type' => $song->getType()
+                );
+            }
+        }
+    } else {
+        $result['message'] = 'Request not valid';
+    }
+    return Response::json($result);
+});
