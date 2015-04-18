@@ -675,3 +675,58 @@ Route::post('ajax/getsong', function(){
     }
     return Response::json($result);
 });
+
+Route::get('practice/redactor', function(){
+    return View::make('redactor');
+});
+
+Route::post('practice/process01', function(){
+    $data = Input::all();
+
+    $rules = array(
+        'file' => 'image|max:500'
+    );
+
+    $valid = Validator::make($data, $rules);
+
+    if ($valid->passes()) {
+        $image = $data['file'];
+        $image->move('uploads/img', $image->getClientOriginalName());
+        $url = URL::to('uploads/img/' . $image->getClientOriginalName());
+        return Response::json(array('filelink' => $url));
+    } else {
+        return false;
+    }
+});
+
+Route::get('practice/jcrop', function(){
+    return View::make('jcrop_view');
+});
+
+Route::post('practice/process02', function(){
+    $img = Input::file('img');
+
+    if ($img->move('uploads/img', $img->getClientOriginalName())) {
+        //$url = URL::to('uploads/img/' . $img->getClientOriginalName());
+        return Redirect::to('practice/docropimg')->with('img', $img->getClientOriginalName());
+    } else {
+
+    }
+});
+
+Route::get('practice/docropimg', function(){
+    $img = Session::get('img');
+
+    return View::make('docropimg', array('img' => $img));
+});
+
+Route::post('practice/createimg', function(){
+    $name = Input::get('img');
+    $image = imagecreatefrompng(URL::to('/') . '/uploads/img/'. $name);
+    $des = imagecreatetruecolor(Input::get('w'), Input::get('h'));
+    imagecopyresampled($des, $image, 0, 0, Input::get('x'), Input::get('y'), Input::get('w'), Input::get('h'), Input::get('w'), Input::get('h'));
+    imagepng($des, 'uploads/crop/' . $name, 9);
+    $url = URL::to('/') . '/uploads/crop/'.$name;
+
+    return '<img src="'.$url.'" />';
+});

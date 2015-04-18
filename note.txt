@@ -14,3 +14,9 @@ Auth::user() : lay thong tin user
 Auth::logout()
 Auth::login($object)
 Auth:once($data) : Khong tao phien lam viec
+
+==========================================
+imagecreatefromjpeg(path) => Lay hinh anh goc
+imagecreatetruecolor(w,h) => Dinh vi toa do
+imagecopyresampled(dinh vi toa do, hinh goc, 0,0,toa do x, toa do y) => tao hinh anh moi
+imagejpeg(dinh vi toa do, duong dan hinh anh, chat luong anh)
