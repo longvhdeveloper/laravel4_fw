@@ -730,3 +730,26 @@ Route::post('practice/createimg', function(){
 
     return '<img src="'.$url.'" />';
 });
+
+Route::get('practice/captcha', function(){
+    $captcha = new Captcha();
+    $image = $captcha->make();
+
+    return View::make('captcha', array('image' => $image));
+});
+
+Route::post('practice/docaptcha', function(){
+    $data = Input::get('captcha');
+    if ($data == Session::get('key')) {
+        return Response::json(array('response' => 'OK'));
+    } else {
+        return Response::json(array('response' => 'Error'));
+    }
+});
+
+Route::get('practice/loadcaptcha', function(){
+    $captcha = new Captcha();
+    $image = $captcha->make();
+
+    return $image;
+});

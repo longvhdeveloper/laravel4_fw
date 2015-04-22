@@ -20,3 +20,15 @@ imagecreatefromjpeg(path) => Lay hinh anh goc
 imagecreatetruecolor(w,h) => Dinh vi toa do
 imagecopyresampled(dinh vi toa do, hinh goc, 0,0,toa do x, toa do y) => tao hinh anh moi
 imagejpeg(dinh vi toa do, duong dan hinh anh, chat luong anh)
+============================================
+xu ly captcha
+imagecreatetruecolor(width, height) -> tao hinh voi chieu rong va chieu cao
+imagecolorallocate(image, color code, color code, color code) -> tao chu voi ma mau
+
+imagecolorallocate(image, color code, color code, color code) -> tao background voi color
+
+imagefilledractangle(hinh, 0, 0, width, height, background) -> gia cong tren background
+
+imagestring(image, font, padding-left, padding-top, word, color) -> tao hinh voi chu
+
+imagejpeg(image) -> hoan tat viec tao hinh
