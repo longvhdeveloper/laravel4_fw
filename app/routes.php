@@ -753,3 +753,63 @@ Route::get('practice/loadcaptcha', function(){
 
     return $image;
 });
+
+Route::get('practice/listbook', function(){
+    $data = Book::all();
+    $cart = Session::get('cart');
+
+    return View::make('listbook', array('books' => $data, 'cart' => $cart));
+});
+
+Route::get('practice/addcart/{id}', function($id){
+    $book = Book::find($id);
+    if ($book) {
+
+        $cart = Session::get('cart');
+
+        $num = isset($cart[$book->id]) ? $cart[$book->id]['num'] + 1 : 1;
+
+        $cart[$book->id] = array(
+            'name' => $book->title,
+            'price' => $book->price,
+            'num' => $num
+        );
+
+        Session::put('cart', $cart);
+        Session::flash('message', 'Buy book success.');
+        return Redirect::to('practice/listbook');
+    }
+});
+
+Route::get('practice/viewcart', function(){
+    $cart = Session::get('cart');
+    return View::make('viewcart', array('cart' => $cart));
+});
+
+Route::get('practice/emptycart', function(){
+    Session::forget('cart');
+    return Redirect::to('practice/viewcart');
+});
+
+Route::post('practice/updatecart', function(){
+    $data = Input::get('qt');
+    if (!empty($data)) {
+        $cart = Session::get('cart');
+        foreach ($data as $id => $qty) {
+            if ($cart[$id]['num'] && is_numeric($qty) && $qty > 0) {
+                $cart[$id]['num'] = $qty;
+            }
+        }
+        Session::put('cart', $cart);
+        return Redirect::to('practice/viewcart');
+    }
+});
+
+Route::get('practice/removeitem/{id}', function($id){
+    $cart = Session::get('cart');
+    if (isset($cart[$id])) {
+        unset($cart[$id]);
+    }
+    Session::put('cart', $cart);
+    return Redirect::to('practice/viewcart');
+});
